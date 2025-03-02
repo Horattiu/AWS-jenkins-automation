@@ -1,0 +1,31 @@
+- name: Configure web server
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Start Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Deploy HTML page
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+            <head>
+              <title>Site Live</title>
+              <style>
+                body { display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; }
+              </style>
+            </head>
+            <body>
+              <h1>🚀 Site-ul este live! </h1>
+            </body>
+          </html>
